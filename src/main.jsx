@@ -6,6 +6,8 @@ import './index.css'
 import Home from './pages/Home.jsx';
 import ChatInterface from './pages/ChatInterface.jsx';
 import Contact from './pages/Contact.jsx'
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,9 +19,18 @@ const router = createBrowserRouter([
     element: <ChatInterface />
   },
   {
+    path: "login",
+    element: <Login />
+  },
+  {
+    path: "register",
+    element: <Register />
+  },
+  {
     path: "contact",
     element: <Contact />
-  } 
+  },
+
 ]);
 
 
