@@ -7,7 +7,9 @@ from importation import (pd, np, Pipeline,
 
 
 def fetch_data_parquet():
-    pass
+    df = pd.read_parquet(r'C:\Users\dimle\Documents\clone_repo\HackathonWCS\ML\user_info.parquet')
+
+    return df
 
 
 def model_knn_module(df:pd.DataFrame, id_user:int, preprocessor:Pipeline)->tuple[int]:
@@ -52,3 +54,8 @@ def model_knn_module(df:pd.DataFrame, id_user:int, preprocessor:Pipeline)->tuple
 
 
     return df_knn.reset_index()
+
+
+df = fetch_data_parquet()
+
+print(df)
