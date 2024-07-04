@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
     prenom: "",
     nom: "",
     sexe: "",
-    age: "",
+    date: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -16,35 +16,35 @@ function Register() {
     type_handicap: "",
     niveau_professionnel: "",
     categorie_socio_professionnelle: "",
-  })
+  });
 
-  const [errors, setErrors] = useState({})
-  const navigate = useNavigate()
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
-    })
-  }
+    });
+  };
 
   const validateForm = () => {
-    let formErrors = {}
+    let formErrors = {};
     if (formData.password !== formData.confirmPassword) {
-      formErrors.confirmPassword = "Les mots de passe ne correspondent pas"
+      formErrors.confirmPassword = "Les mots de passe ne correspondent pas";
     }
-    setErrors(formErrors)
-    return Object.keys(formErrors).length === 0
-  }
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (validateForm()) {
-      console.log("Form data", formData)
-      navigate("/login")
+      console.log("Form data", formData);
+      navigate("/login");
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-900 via-purple-800 to-purple-700">
@@ -95,10 +95,10 @@ function Register() {
           </div>
           <div>
             <input
-              type="number"
-              name="age"
-              id="age"
-              placeholder="Entrez votre âge"
+              type="date"
+              name="date"
+              id="date"
+              placeholder="Entrez votre date de naissance"
               value={formData.age}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -129,6 +129,21 @@ function Register() {
               required
             />
           </div>
+
+          <div>
+            <select
+              name="lgbt"
+              id="lgbt"
+              value={formData.lgbt}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+              <option value="">Sélectionnez votre statut LGBT</option>
+              <option value="Oui">Oui</option>
+              <option value="Non">Non</option>
+            </select>
+          </div>
           <div>
             <input
               type="password"
@@ -147,20 +162,6 @@ function Register() {
                 {errors.confirmPassword}
               </p>
             )}
-          </div>
-          <div>
-            <select
-              name="lgbt"
-              id="lgbt"
-              value={formData.lgbt}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="">Sélectionnez votre statut LGBT</option>
-              <option value="Oui">Oui</option>
-              <option value="Non">Non</option>
-            </select>
           </div>
           <div className="flex items-center">
             <input
@@ -246,7 +247,7 @@ function Register() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;
