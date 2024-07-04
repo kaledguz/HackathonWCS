@@ -1,8 +1,12 @@
-from importation import (pd, Pipeline, 
-                                 OneHotEncoder,
-                                MultiLabelBinarizer, ColumnTransformer, 
-                                SimpleImputer, BaseEstimator, 
-                                TransformerMixin, NearestNeighbors)
+import pandas as pd
+
+
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import  MultiLabelBinarizer, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.neighbors import NearestNeighbors
 
 
 
@@ -124,9 +128,6 @@ def model_knn_module(df:pd.DataFrame, id_user:int, preprocessor:Pipeline)->tuple
 
     # entarinement du model
     pipeline_with_knn.fit(df_knn)
-
-    # id_mentorat = df[df['id_login_user'] == id_user]['id_mentorat'].iloc[0]
-
     
     #recuperation des information du user selectionné
     query_features = df_search.drop(columns=['id_login_user'], axis=1)
@@ -141,37 +142,39 @@ def model_knn_module(df:pd.DataFrame, id_user:int, preprocessor:Pipeline)->tuple
     # recuperation des infos par rapprot au id trouvés par le model knn
     df_knn = df_knn.iloc[id_knn[0]]
 
+    result_tuple = tuple(df_knn['id_login_user'].iloc[1:].to_list())
+
+    print(result_tuple)
+
+    return result_tuple
 
 
-    return df_knn.reset_index()
+def api_ml(id_user:int, preprocessor:Pipeline=preprocessor)->tuple[int]:
+    
+    path_parquet = r'C:\Users\dimle\Documents\clone_repo\HackathonWCS\ML\user_info_clean.parquet'
+
+    df = fetch_data_parquet(path_parquet)
+
+    df['id_mentorat'] = df['id_mentorat'].astype(str)
+    df['id_mentor'] = df['id_mentor'].astype(str)
+    df['id_mentorat'] = df['id_mentorat'].astype(str)
+
+    features_bool = ['lgbt', 'handicap']
+
+    # features_cat_list = ['id_login_user', 'sexe', 'type_handicap', 'niveau_professionnel','categorie_socio_professionnelle', 'id_mentorat', 'id_mentor', 'type_mentorat', 'id_sujet']
+    features_cat_list = ['sexe', 'type_handicap', 'niveau_professionnel', 'id_mentorat']
+
+    # Génération du preprocessing
+    preprocessor = preprocessor(features_bool, features_cat_list)
+
+    # insertion du module de proche voisin --> dataframe resultat avec les 5 recomandations
+    result = model_knn_module(df, id_user, preprocessor)
+
+    return result
 
 
 
-
-
-
-path_parquet = r'C:\Users\dimle\Documents\clone_repo\HackathonWCS\ML\user_info_clean.parquet'
-df = fetch_data_parquet(path_parquet)
-
-df['id_mentorat'] = df['id_mentorat'].astype(str)
-df['id_mentor'] = df['id_mentor'].astype(str)
-df['id_mentorat'] = df['id_mentorat'].astype(str)
-
-
-id_user = 1810
-features_bool = ['lgbt', 'handicap']
-# features_cat_list = ['id_login_user', 'sexe', 'type_handicap', 'niveau_professionnel','categorie_socio_professionnelle', 'id_mentorat', 'id_mentor', 'type_mentorat', 'id_sujet']
-features_cat_list = ['sexe', 'type_handicap', 'niveau_professionnel', 'id_mentorat']
-
-
-
-
-# Génération du preprocessing
-preprocessor = preprocessor(features_bool, features_cat_list)
-
-# insertion du module de proche voisin --> dataframe resultat avec les 5 recomandations
-result = model_knn_module(df, id_user, preprocessor)
-
-print()
-print(result)
-print()
+'''
+Lancement du api_ml pour recherche proche voisin
+'''
+api_ml(1810)
