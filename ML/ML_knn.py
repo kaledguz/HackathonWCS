@@ -88,7 +88,7 @@ def preprocessor(features_bool:list[str], features_cat_list:list[str])-> Pipelin
     # Combinaison des transformation pour le preprocessing
     preprocessor = ColumnTransformer(
         transformers= [
-            ('num_log_std', category_list_transformer_bool, features_bool)
+            ('num_bol', category_list_transformer_bool, features_bool)
         ] + list_tuple
     )
 
@@ -177,4 +177,4 @@ def api_ml(id_user:int, preprocessor:Pipeline=preprocessor)->tuple[int]:
 '''
 Lancement du api_ml pour recherche proche voisin
 '''
-api_ml(1810)
+api_ml(2380)
