@@ -171,20 +171,25 @@ def populate_login_user_and_user_info(n_users: int, fake: Faker, **kwargs) -> tu
     
     user_info_insert_query = """
     INSERT INTO user_info (id_user_info, prenom, nom, sexe, age, mentor, lgbt, handicap, type_handicap, 
-                           niveau_professionnel, categorie_socio_professionel, nombre_de_participation, id_login_user)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                           niveau_professionnel, categorie_socio_professionnelle, nombre_de_participation, id_login_user, id_mentorat)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     
     mentors = []
     mentees = []
     try:
         with mysql.connector.connect(**kwargs) as connection:
             with connection.cursor() as cursor:
+                cursor.execute("SELECT id_mentorat FROM mentorat")
+                mentorat_ids = [row[0] for row in cursor.fetchall()]
+                if not mentorat_ids:
+                        raise ValueError("The mentorat table is empty.")
                 for _ in range(n_users):
                     email = fake.email()
                     mot_de_passe = fake.password()
                     
                     cursor.execute(login_user_insert_query, (email, mot_de_passe))
                     id_login_user = cursor.lastrowid
+                    
 
                     prenom = fake.first_name()
                     nom = fake.last_name()
@@ -195,11 +200,11 @@ def populate_login_user_and_user_info(n_users: int, fake: Faker, **kwargs) -> tu
                     handicap = random.choice([True, False])
                     type_handicap = random.choice(['Visuel', 'Auditif', 'Physique', 'Mental', 'Autre']) if handicap else None
                     niveau_professionnel = random.choice(['Étudiant', 'Jeune diplômé', 'Actif', 'Senior'])
-                    categorie_socio_professionel = random.choice(['Agriculteur', 'Artisan', 'Cadre', 'Commerçant', 'Employé', 'Étudiant', 'Profession libérale', 'Ouvrier', 'Retraité', 'Sans activité professionnelle'])
+                    categorie_socio_professionnelle = random.choice(['Agriculteur', 'Artisan', 'Cadre', 'Commerçant', 'Employé', 'Étudiant', 'Profession libérale', 'Ouvrier', 'Retraité', 'Sans activité professionnelle'])
                     nombre_de_participation = random.randint(0, 20)
-
+                    id_mentorat = random.choice(mentorat_ids)
                     cursor.execute(user_info_insert_query, (id_login_user, prenom, nom, sexe, age, mentor, lgbt, handicap, type_handicap, 
-                                                            niveau_professionnel, categorie_socio_professionel, nombre_de_participation, id_login_user))
+                                                            niveau_professionnel, categorie_socio_professionnelle, nombre_de_participation, id_login_user, id_mentorat))
 
                     if mentor:
                         mentors.append(id_login_user)
