@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
 
 function Login() {
-  const redirectInscription = useNavigate();
+  const redirectInscription = useNavigate()
 
   const handleClick = () => {
-    redirectInscription('/register');
-  };
+    redirectInscription("/register")
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen ">
       <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">Se connecter</h2>
         <div className="space-y-4">
@@ -51,7 +51,7 @@ function Login() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login
