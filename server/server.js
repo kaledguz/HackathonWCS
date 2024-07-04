@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import { fetchAllUsers, fetchUserById, addUser, modifyUser, removeUser } from './controllers/userController.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -25,5 +26,12 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
+
+
+app.get('/users', fetchAllUsers);
+app.get('/users/:id', fetchUserById);
+app.post('/users', addUser);
+app.put('/users/:id', modifyUser);
+app.delete('/users/:id', removeUser);
 
 server.listen(4000, () => console.log('Server running on port 4000'));
