@@ -1,56 +1,59 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Register() {
   const [formData, setFormData] = useState({
-    prenom: '',
-    nom: '',
-    sexe: '',
-    age: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    prenom: "",
+    nom: "",
+    sexe: "",
+    age: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     mentor: false,
-    lgbt: '',
+    lgbt: "",
     handicap: false,
-    type_handicap: '',
-    niveau_professionnel: '',
-    categorie_socio_professionnelle: ''
-  });
+    type_handicap: "",
+    niveau_professionnel: "",
+    categorie_socio_professionnelle: "",
+  })
 
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
+      [name]: type === "checkbox" ? checked : value,
+    })
+  }
 
   const validateForm = () => {
-    let formErrors = {};
+    let formErrors = {}
     if (formData.password !== formData.confirmPassword) {
-      formErrors.confirmPassword = "Les mots de passe ne correspondent pas";
+      formErrors.confirmPassword = "Les mots de passe ne correspondent pas"
     }
-    setErrors(formErrors);
-    return Object.keys(formErrors).length === 0;
-  };
+    setErrors(formErrors)
+    return Object.keys(formErrors).length === 0
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (validateForm()) {
-      console.log('Form data', formData);
-      navigate('/login');
+      console.log("Form data", formData)
+      navigate("/login")
     }
-  };
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center mb-4">S'inscrire</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-900 via-purple-800 to-purple-700">
+      <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-md">
+        <h2 className="text-3xl font-bold text-center mb-6">S&apos;inscrire</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <div>
             <input
               type="text"
@@ -134,12 +137,17 @@ function Register() {
               placeholder="Confirmez votre mot de passe"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`w-full px-4 py-2 border ${
+                errors.confirmPassword ? "border-red-500" : "border-gray-300"
+              } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
               required
             />
-            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword}
+              </p>
+            )}
           </div>
-          
           <div>
             <select
               name="lgbt"
@@ -163,7 +171,9 @@ function Register() {
               onChange={handleChange}
               className="mr-2"
             />
-            <label htmlFor="handicap" className="text-gray-700">Avez-vous un handicap ?</label>
+            <label htmlFor="handicap" className="text-gray-700">
+              Avez-vous un handicap ?
+            </label>
           </div>
           <div>
             <input
@@ -197,7 +207,9 @@ function Register() {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
-              <option value="">Sélectionnez votre catégorie socio-professionnelle</option>
+              <option value="">
+                Sélectionnez votre catégorie socio-professionnelle
+              </option>
               <option value="Agriculteur">Agriculteur</option>
               <option value="Artisan">Artisan</option>
               <option value="Cadre">Cadre</option>
@@ -219,18 +231,22 @@ function Register() {
               onChange={handleChange}
               className="mr-2"
             />
-            <label htmlFor="mentor" className="text-gray-700">Êtes-vous un mentor ?</label>
+            <label htmlFor="mentor" className="text-gray-700">
+              Êtes-vous un mentor ?
+            </label>
           </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            S'inscrire
-          </button>
+          <div className="col-span-1 md:col-span-2">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              S&apos;inscrire
+            </button>
+          </div>
         </form>
       </div>
     </div>
-  );
+  )
 }
 
 export default Register
