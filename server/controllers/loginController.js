@@ -1,9 +1,9 @@
-import { authenticateUser } from "../models/authModel.js"
+import { getUserByEmailAndPassword } from "../models/authModel.js"
 
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body
-    const user = await authenticateUser(email, password)
+    const user = await getUserByEmailAndPassword(email, password)
     if (user) {
       res.status(200).json(user)
     } else {
