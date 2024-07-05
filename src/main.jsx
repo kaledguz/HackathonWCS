@@ -9,6 +9,7 @@ import ChatInterface from "./pages/ChatInterface.jsx"
 import Contact from "./pages/Contact.jsx"
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
+import RegisterInfo from "./pages/RegisterInfo.jsx"
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <Register />,
+        element: <Register/>,
+      },
+      {
+        path: "registerInfo",
+        element: <RegisterInfo />,
       },
       {
         path: "contact",
