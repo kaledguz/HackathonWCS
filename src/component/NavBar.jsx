@@ -9,9 +9,6 @@ function NavBar() {
           <a href="/" className="text-white hover:text-purple">
             Home
           </a>
-          <a href="/chatInterface" className="text-white hover:text-purple">
-            Chat
-          </a>
           <a href="/login" className="text-white hover:text-purple">
             Login
           </a>
@@ -20,6 +17,9 @@ function NavBar() {
           </a>
           <a href="/contact" className="text-white hover:text-purple">
             Contact
+          </a>
+          <a href="/calendar" className="text-white hover:text-purple">
+            Calendar
           </a>
         </div>
       </div>

@@ -11,10 +11,9 @@ const db = mysql.createPool({
   database: process.env.DB_NAME || 'db_datacoders',
 });
 
-
 async function testConnection() {
   try {
-    const [rows] = await db.query('SELECT * FROM user_info where id_user_info = 1');
+    const [rows] = await db.query('SELECT * FROM user_info WHERE id_user_info = 1');
     console.log('Database connection test successful!');
     return rows;
   } catch (err) {
