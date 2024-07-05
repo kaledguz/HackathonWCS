@@ -23,7 +23,7 @@ const MyCalendar = () => {
 
   const handleEventSave = () => {
     setEvents([...events, newEvent])
-    saveEventToServer(newEvent) // Save event to the server
+    saveEventToServer(newEvent)
     setIsModalOpen(false)
   }
 
@@ -39,12 +39,12 @@ const MyCalendar = () => {
           evt === event ? { ...evt, title: newTitle } : evt
         )
         setEvents(updatedEvents)
-        updateEventOnServer({ ...event, title: newTitle }) // Update event on the server
+        updateEventOnServer({ ...event, title: newTitle })
       }
     } else if (action === "delete") {
       const updatedEvents = events.filter((evt) => evt !== event)
       setEvents(updatedEvents)
-      deleteEventFromServer(event) // Delete event from the server
+      deleteEventFromServer(event)
     }
   }
 
