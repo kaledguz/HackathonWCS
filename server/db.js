@@ -1,4 +1,3 @@
-// db.js
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 
@@ -11,6 +10,7 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD || 'dataCoders2024+',
   database: process.env.DB_NAME || 'db_datacoders',
 });
+
 
 async function testConnection() {
   try {
